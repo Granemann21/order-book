@@ -52,37 +52,45 @@ void LinkedOrderList::addOrder(Order* order){
     if (size == 0) {
         this->setHead(order_node);
         this->setTail(order_node);
-        this->size+=1;
     }
 
     else {
         this->tail->setNext(order_node);
         this->setTail(order_node);
-        this->size += 1;
     }
-
+    this->size += 1;
 };
 
 bool LinkedOrderList::removeOrder(int order_id){
-    bool found = false;
-    int i = 0;
+    if (this->head == nullptr) return false; // Se a lista tiver vazia 
+
     // Uma variável para guardar a ordem da iteração atual e outra pra guardar a anterior 
     OrderNode* temp = this->getHead();
-    OrderNode* prev = this->getHead();
-    while (found == false){
-        if (temp->getOrder()->getId() == order_id){
-            found = true;
-            break;
-        }
+    OrderNode* prev = nullptr;
+
+    while (temp != nullptr && temp->getOrder()->getId() != order_id){
         prev = temp;
-        temp = prev->getNext();
-        i++;
-        if (i == this->size){
-            return false;
-        }
+        temp = temp->getNext();
     }
-    prev->setNext(temp->getNext());
+
+    // se saiu do loop e o temp é nullptr, quer dizer que passou por todos os elementos e não encontrou o resultado
+    if (temp == nullptr) return false;
+
+
+    if (prev == nullptr){
+        // Nesse caso o elemento a ser removido é o head
+        this->setHead(temp->getNext());
+    }
+    else {
+        prev->setNext(temp->getNext());
+    }
+
+    if (temp == this->getTail()){
+        this->setTail(prev);
+    }
+
     delete temp;
-    temp = nullptr;
+    this->size--;
+
     return true;
 }
