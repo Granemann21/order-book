@@ -2,11 +2,15 @@
 #define ORDER_BOOK_HPP
 #include "Order.hpp"
 #include "Transaction.hpp"
+#include "Linkedlist.hpp"
+#include "LinkedTransactionList.hpp"
 
 class OrderBook {
 
 private:
-
+LinkedOrderList buyOrders;
+LinkedOrderList sellOrders;
+LinkedTransactionList transactions;
 
 public:
 
