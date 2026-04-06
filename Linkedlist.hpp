@@ -35,6 +35,7 @@ public:
 
     void addOrder(Order* order);
     bool removeOrder(int order_id);
+    int getSize();
 };
 
 

@@ -6,7 +6,11 @@ OrderNode::OrderNode(Order* order){
     this->next = nullptr;
 }
 
-OrderNode::~OrderNode(){}
+OrderNode::~OrderNode(){
+    if (this->order != nullptr) {
+        delete this->order;
+    }
+}
 
 OrderNode* OrderNode::getNext(){
     return this->next;
@@ -42,11 +46,29 @@ void LinkedOrderList::setTail(OrderNode* order_node){
 
 
 
-LinkedOrderList::~LinkedOrderList(){}
+LinkedOrderList::~LinkedOrderList(){
+    OrderNode* current = this->head;
+    while (current != nullptr) {
+        OrderNode* next_node = current->getNext();
+        
+        delete current;
+        
+        current = next_node;
+    }
+    this->head = nullptr;
+    this->tail = nullptr;
+    this->size = 0;
+}
 
 void LinkedOrderList::addOrder(Order* order){
-    
-    OrderNode* order_node = new OrderNode(order);
+    Order* order_copy = new Order(
+        order->getId(), 
+        order->getType(), 
+        order->getPrice(), 
+        order->getTimestamp()
+    );
+
+    OrderNode* order_node = new OrderNode(order_copy);
 
     // Se o tamanho for zero então o head e o tail são o mesmo e não tem nenhuma order no tail
     if (size == 0) {
@@ -93,4 +115,8 @@ bool LinkedOrderList::removeOrder(int order_id){
     this->size--;
 
     return true;
+}
+
+int LinkedOrderList::getSize() {
+    return this->size;
 }
