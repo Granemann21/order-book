@@ -1,4 +1,4 @@
-#include "Linkedlist.hpp"
+#include "LinkedOrderlist.hpp"
 
 // OrderNode
 OrderNode::OrderNode(Order* order){
@@ -44,8 +44,6 @@ void LinkedOrderList::setTail(OrderNode* order_node){
     this->tail = order_node;
 }
 
-
-
 LinkedOrderList::~LinkedOrderList(){
     OrderNode* current = this->head;
     while (current != nullptr) {
@@ -61,6 +59,10 @@ LinkedOrderList::~LinkedOrderList(){
 }
 
 void LinkedOrderList::addOrder(Order* order){
+
+    // Se alguem passar um ponteiro nulo em vez de um order
+    if (order == nullptr) return;
+
     Order* order_copy = new Order(
         order->getId(), 
         order->getType(), 
@@ -80,7 +82,7 @@ void LinkedOrderList::addOrder(Order* order){
         this->tail->setNext(order_node);
         this->setTail(order_node);
     }
-    this->size += 1;
+    this->size++;
 };
 
 bool LinkedOrderList::removeOrder(int order_id){

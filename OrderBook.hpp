@@ -2,7 +2,7 @@
 #define ORDER_BOOK_HPP
 #include "Order.hpp"
 #include "Transaction.hpp"
-#include "Linkedlist.hpp"
+#include "LinkedOrderlist.hpp"
 #include "LinkedTransactionList.hpp"
 
 class OrderBook {
@@ -17,7 +17,7 @@ public:
     OrderBook();
     ~OrderBook();
 
-    bool submit(Order order);
+    bool submit(Order* order);
     bool cancel(int id);
 
     Order* getBuyOrders(int* n);
@@ -28,7 +28,14 @@ public:
     void printSellOrders();
     void printTransactions();
 
-    // Outros métodos auxiliares, se necessário
+    // Auxiliares
+
+    void addBuyOrder(Order* order);
+    void addSellOrder(Order* order);
+    
+    LinkedOrderList getBuyOrdersList();
+    LinkedOrderList getSellOrdersList();
+
 };
 
 #endif

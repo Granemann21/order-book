@@ -1,5 +1,5 @@
-#ifndef LINKED_LIST_HPP
-#define LINKED_LIST_HPP
+#ifndef LINKED_ORDER_LIST_HPP
+#define LINKED_ORDER_LIST_HPP
 #include "Order.hpp"
 
 class OrderNode{
