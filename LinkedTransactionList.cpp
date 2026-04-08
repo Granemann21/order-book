@@ -39,6 +39,11 @@ LinkedTransactionList::~LinkedTransactionList() {
     }
 }
 
+bool LinkedTransactionList::isEmpty(){
+    if (this->getSize() == 0) {return true;}
+    else {return false;}
+}
+
 TransactionNode* LinkedTransactionList::getHead() {
     return this->head;
 }

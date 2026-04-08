@@ -28,6 +28,8 @@ public:
     LinkedOrderList();
     ~LinkedOrderList();
 
+    bool isEmpty();
+
     OrderNode* getHead();
     void setHead(OrderNode* order_node);
     OrderNode* getTail();

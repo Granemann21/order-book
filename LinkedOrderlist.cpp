@@ -31,6 +31,11 @@ LinkedOrderList::LinkedOrderList(){
     this->size = 0;
 }
 
+bool LinkedOrderList::isEmpty(){
+    if (this->getSize() == 0) {return true;}
+    else {return false;}
+}
+
 OrderNode* LinkedOrderList::getHead(){
     return this->head;
 }
@@ -85,8 +90,9 @@ void LinkedOrderList::addOrder(Order* order){
     this->size++;
 };
 
+
 bool LinkedOrderList::removeOrder(int order_id){
-    if (this->head == nullptr) return false; // Se a lista tiver vazia 
+    if (this->isEmpty()) {return false;} // Se a lista tiver vazia 
 
     // Uma variável para guardar a ordem da iteração atual e outra pra guardar a anterior 
     OrderNode* temp = this->getHead();

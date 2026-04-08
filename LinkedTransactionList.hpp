@@ -26,6 +26,7 @@ private:
 public:
     LinkedTransactionList();
     ~LinkedTransactionList();
+    bool isEmpty();
 
     TransactionNode* getHead();
     int getSize();
