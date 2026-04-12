@@ -46,7 +46,7 @@ chmod +x order_book
   
   Busca: Percorre a lista de contraparte para identificar ordens com preço compatível.
   
-  Prioridade: Seleciona a contraparte com o melhor preço (menor para venda, maior para compra). Em empates, utiliza-se a de menor timestamp.
+  Prioridade: Seleciona a contraparte com o melhor preço (maior para venda, menor para compra). Em empates, utiliza-se a de menor timestamp.
   
   Execução: Gera uma Transaction com o preço da ordem que já estava no livro e remove os itens compatíveis.
 
