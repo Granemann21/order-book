@@ -7,10 +7,9 @@ OrderBook::OrderBook(){}
 // YET TO IMPLEMENT
 OrderBook::~OrderBook(){}
 
-bool OrderBook::submit(Order* order) {
-    if (order == nullptr) return false;
+bool OrderBook::submit(Order order) {
 
-    if (order->getType() == 'B') {
+    if (order.getType() == 'B') {
         int n = 0;
         Order* s_orders = this->getSellOrders(&n);
         int best_id = -1;
@@ -19,7 +18,7 @@ bool OrderBook::submit(Order* order) {
         if (s_orders != nullptr) {
             for (int i = 0; i < n; i++) {
                 // Se o preço da venda <= preço da compra (match possível)
-                if (s_orders[i].getPrice() <= order->getPrice()) {
+                if (s_orders[i].getPrice() <= order.getPrice()) {
                     // Queremos o (menor preço)
                     if (best_id == -1 || s_orders[i].getPrice() < best_price) {
                         best_id = s_orders[i].getId();
@@ -32,17 +31,15 @@ bool OrderBook::submit(Order* order) {
             // Se achou alguém, executa o match com o melhor
             if (best_id != -1) {
                 this->sellOrders.removeOrder(best_id);
-                this->transactions.addTransaction(order->getId(), best_id, best_price);
-                delete order;
+                this->transactions.addTransaction(order.getId(), best_id, best_price);
                 return true;
             }
         }
-        this->buyOrders.addOrder(order);
-        delete order;
+        this->buyOrders.addOrder(&order);
         return false;
     }
 
-    if (order->getType() == 'S') {
+    if (order.getType() == 'S') {
         int n = 0;
         Order* b_orders = this->getBuyOrders(&n);
         int best_id = -1;
@@ -51,7 +48,7 @@ bool OrderBook::submit(Order* order) {
         if (b_orders != nullptr) {
             for (int i = 0; i < n; i++) {
                 // Se o preço da compra >= preço da venda (match possível)
-                if (b_orders[i].getPrice() >= order->getPrice()) {
+                if (b_orders[i].getPrice() >= order.getPrice()) {
                     // Queremos a mais cara (maior preço para quem vende)
                     if (best_id == -1 || b_orders[i].getPrice() > best_price) {
                         best_id = b_orders[i].getId();
@@ -63,13 +60,11 @@ bool OrderBook::submit(Order* order) {
 
             if (best_id != -1) {
                 this->buyOrders.removeOrder(best_id);
-                this->transactions.addTransaction(best_id, order->getId(), best_price);
-                delete order;
+                this->transactions.addTransaction(best_id, order.getId(), best_price);
                 return true;
             }
         }
-        this->sellOrders.addOrder(order);
-        delete order;
+        this->sellOrders.addOrder(&order);
         return false;
     }
     return false;
@@ -144,27 +139,9 @@ Transaction* OrderBook::getTransactions(int* n) {
 
 bool OrderBook::cancel(int id){
 
-    // pega a lista de sells e verifica se a order está na lista
-    int n = 0;
-    Order* s_orders = this->getSellOrders(&n);
+    if (this->buyOrders.removeOrder(id)) return true;
+    if (this->sellOrders.removeOrder(id)) return true;
 
-    for (int i = 0; i < n; i++){
-        if (s_orders[i].getId() == id) {
-            this->sellOrders.removeOrder(id);
-            return true;
-        }
-    }
-
-    // pega a lista de buys e verifica se a order está na lista
-    Order* b_orders = this->getBuyOrders(&n);
-    for (int i = 0; i < n; i++){
-        if (b_orders[i].getId() == id) {
-            this->buyOrders.removeOrder(id);
-            return true;
-        }
-    }
-
-    // Não encontrou então retorna falso
     return false;
 }
 
@@ -228,9 +205,9 @@ void OrderBook::printTransactions(){
 
     // faz o print de cada transaction (a lista já é ordenada por timestamp)
     for (int i = 0; i < n; i++){
-        int b_id = trans->getBuyOrderId();
-        int s_id = trans->getSellOrderId();
-        float price = trans->getExecutionPrice();
+        int b_id = trans[i].getBuyOrderId();
+        int s_id = trans[i].getSellOrderId();
+        float price = trans[i].getExecutionPrice();
 
         std::cout << "[" << b_id << ", " << s_id << ", " << price << "]" << std::endl;
 

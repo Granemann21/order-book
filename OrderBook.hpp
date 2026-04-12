@@ -17,7 +17,7 @@ public:
     OrderBook();
     ~OrderBook();
 
-    bool submit(Order* order);
+    bool submit(Order order);
     bool cancel(int id);
 
     Order* getBuyOrders(int* n);
