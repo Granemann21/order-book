@@ -28,14 +28,6 @@ public:
     void printSellOrders();
     void printTransactions();
 
-    // Auxiliares
-
-    void addBuyOrder(Order* order);
-    void addSellOrder(Order* order);
-    
-    LinkedOrderList getBuyOrdersList();
-    LinkedOrderList getSellOrdersList();
-
 };
 
 #endif
