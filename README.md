@@ -40,7 +40,7 @@ chmod +x order_book
 
     Nodes: Cada nó é o detentor da posse do objeto dinâmico que carrega.
 
-2. Motor de Cruzamento
+2. Funcionamento do Sistema
 
   A lógica de `submit()` segue o fluxo:
   
